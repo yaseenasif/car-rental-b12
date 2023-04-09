@@ -40,6 +40,18 @@ public class CustomerDAO extends BaseDAO implements ICrud<Customer>{
         }
     }
 
+
+    public List<Customer> getByName(String name) {
+        try {
+            PreparedStatement ps=conn.prepareStatement("Select * from customer where customer_name like '%"+name+"%'");
+            ResultSet rs=ps.executeQuery();
+            return customerMapper.ResultSetToList(rs);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public void insert(Customer obj) {
         try {
@@ -63,10 +75,21 @@ public class CustomerDAO extends BaseDAO implements ICrud<Customer>{
             PreparedStatement ps= conn.prepareStatement(SqlQueryConstant.DELETE_CUSTOMER_BY_ID);
             ps.setInt(1,id.intValue());
             ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        }
+    }
+
+    public void deleteByName(String name){
+        try {
+            PreparedStatement ps= conn.prepareStatement("select * from customer where customer_name = ?");
+            ps.setString(1,name.toString());
+            ps.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
@@ -75,7 +98,11 @@ public class CustomerDAO extends BaseDAO implements ICrud<Customer>{
         try {
             PreparedStatement ps= conn.prepareStatement(SqlQueryConstant.UPDATE_CUSTOMER_BY_ID);
             ps.setString(1,obj.getName());
-            ps.setInt(2,id.intValue());
+            ps.setString(2,obj.getPhoneNumber());
+            ps.setString(3,obj.getCnic());
+            ps.setString(4,obj.getAddress());
+            ps.setString(5, obj.getReferencePhoneNumber());
+            ps.setInt(6,id.intValue());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

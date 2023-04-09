@@ -14,7 +14,7 @@ public class VehicleOwnerMapper implements IMapper<VehicleOwner> {
     private final static String OWNERNAME = "owner_name";
     private final static String OWNERNUMBER = "owner_number";
     private final static String ADDRESS = "address";
-    private final static String COMMISSION = "commission";
+    private final static String COMMISSION = "commision";
     @Override
     public List<VehicleOwner> ResultSetToList(ResultSet rs) throws SQLException {
 

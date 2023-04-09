@@ -2,7 +2,7 @@ package org.car_rental.domain;
 
 import lombok.*;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Builder
 @Data

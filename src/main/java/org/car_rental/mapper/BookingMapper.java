@@ -11,8 +11,8 @@ import java.util.List;
 public class BookingMapper implements IMapper<Booking> {
 
     private final static String ID = "id";
-    private final static String CUSTOMERID = "cid";
-    private final static String VEHICLEID = "vid";
+    private final static String CUSTOMERID = "c_id";
+    private final static String VEHICLEID = "v_id";
     private final static String BOOKINGDATE = "booking_date";
     private final static String AMOUNT = "amount";
 

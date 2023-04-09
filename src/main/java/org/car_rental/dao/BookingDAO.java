@@ -4,7 +4,8 @@ import org.car_rental.domain.Booking;
 import org.car_rental.mapper.BookingMapper;
 
 import java.sql.*;
-import java.util.List;
+import java.sql.Date;
+import java.util.*;
 
 public class BookingDAO extends BaseDAO implements ICrud<Booking>{
     BookingMapper bookingMapper=new BookingMapper();
@@ -37,7 +38,7 @@ public class BookingDAO extends BaseDAO implements ICrud<Booking>{
             PreparedStatement ps= conn.prepareStatement(SqlQueryConstant.INSERT_BOOKING);
             ps.setLong(1,obj.getCustomerId());
             ps.setLong(2,obj.getVehicleId());
-            ps.setDate(3, (Date) obj.getBookingDate());
+            ps.setDate(3, obj.getBookingDate());
             ps.setFloat(4,obj.getAmount());
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -68,5 +69,17 @@ public class BookingDAO extends BaseDAO implements ICrud<Booking>{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<Booking> getByDate(Date date) {
+        try {
+            PreparedStatement ps= conn.prepareStatement("select * from booking where booking_date = '"+date+"'");
+            ResultSet rs = ps.executeQuery();
+            return bookingMapper.ResultSetToList(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 }

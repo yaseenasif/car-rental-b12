@@ -22,7 +22,7 @@ public class CustomerMapper implements IMapper<Customer> {
         List<Customer> customerList = new ArrayList<>();
         while (rs.next()) {
             Customer customer = Customer.builder()
-                    .id( rs.getLong(ID))
+                    .id((long) rs.getInt(ID))
                     .name(rs.getString(NAME))
                     .phoneNumber(rs.getString(PHONENUMBER))
                     .cnic(rs.getString(CNIC))

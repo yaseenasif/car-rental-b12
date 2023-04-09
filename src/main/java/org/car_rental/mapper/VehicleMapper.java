@@ -24,7 +24,7 @@ public class VehicleMapper implements IMapper<Vehicle>{
                     .id(rs.getLong(ID))
                     .vehicleName(rs.getString(VEHICLENAME))
                     .color(rs.getString(COLOR))
-                    .year(rs.getLong(YEAR))
+                    .year(rs.getInt(YEAR))
                     .brand(rs.getString(BRAND))
                     .ownerId(rs.getLong(OWNERID))
                     .build();
@@ -40,7 +40,7 @@ return vehicleList;
                 .id(rs.getLong(ID))
                 .vehicleName(rs.getString(VEHICLENAME))
                 .color(rs.getString(COLOR))
-                .year(rs.getLong(YEAR))
+                .year(Integer.valueOf(YEAR))
                 .brand(rs.getString(BRAND))
                 .ownerId(rs.getLong(OWNERID))
                 .build();

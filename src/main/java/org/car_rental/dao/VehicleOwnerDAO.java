@@ -58,7 +58,6 @@ public class VehicleOwnerDAO extends BaseDAO implements ICrud<VehicleOwner>{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
@@ -66,11 +65,25 @@ public class VehicleOwnerDAO extends BaseDAO implements ICrud<VehicleOwner>{
         try {
             PreparedStatement ps= conn.prepareStatement(SqlQueryConstant.UPDATE_VEHICLE_OWNER_BY_ID);
             ps.setString(1, obj.getOwnerName());
-            ps.setInt(2,id.intValue());
+            ps.setString(2,obj.getOwnerNumber());
+            ps.setString(3,obj.getAddress());
+            ps.setFloat(4,obj.getCommission());
+            ps.setInt(5,id.intValue());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<VehicleOwner> getByName(String name) {
+        try {
+            PreparedStatement ps= conn.prepareStatement("select * from vehicle_owner where owner_name like '%"+name+"%'");
+            ResultSet rs = ps.executeQuery();
+            return vehicleOwnerMapper.ResultSetToList(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
 }

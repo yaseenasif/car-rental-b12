@@ -13,7 +13,7 @@ public class Vehicle {
     Long id;
     String vehicleName;
     String color;
-    Long year;
+    Integer year;
     String brand;
     Long ownerId;
 
