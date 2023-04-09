@@ -5,6 +5,7 @@ import org.car_rental.domain.Booking;
 import org.car_rental.domain.Customer;
 import org.car_rental.service.BookingService;
 import org.car_rental.service.CustomerService;
+import org.car_rental.service.GeneratePdfForCustomer;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -16,12 +17,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
+import static org.car_rental.service.GeneratePdfForCustomer.generatePdf;
+
 public class CustomerUi extends Component {
 
 
     CustomerService customerService =new CustomerService();
-    Customer customer = new Customer();
-    BookingService bookingService=new BookingService();
+
+//    GeneratePdfForCustomer generatePdfForCustomer = new GeneratePdfForCustomer();
+
     public static void main(String[] args) {
         new CustomerUi();
     }
@@ -54,7 +58,7 @@ public class CustomerUi extends Component {
         generatePdfBtn.addActionListener(e->{
 
             try {
-                GeneratePdfCustomer.generatePdf(jt);
+                generatePdf(jt);
             } catch (FileNotFoundException ex) {
                 throw new RuntimeException(ex);
             } catch (DocumentException ex) {
