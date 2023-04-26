@@ -22,13 +22,14 @@ public class BookingMapper implements IMapper<Booking> {
         while (rs.next()) {
           Booking booking= Booking.builder()
                     .id(rs.getLong(ID))
-                    .customerId(rs.getLong(CUSTOMERID))
-                    .vehicleId(rs.getLong(VEHICLEID))
+                    .customer(rs.getString(CUSTOMERID))
+                    .vehicle(rs.getString(VEHICLEID))
                     .bookingDate(rs.getDate(BOOKINGDATE))
+                    .completeDate(rs.getDate("complete_date"))
                     .amount(rs.getFloat(AMOUNT))
+                    .status(rs.getString("status"))
                     .build();
           bookingList.add(booking);
-
         }
         return bookingList;
     }
@@ -37,11 +38,25 @@ public class BookingMapper implements IMapper<Booking> {
         if (rs.next()) {
             return Booking.builder()
                     .id(rs.getLong(ID))
-                    .customerId(rs.getLong(CUSTOMERID))
-                    .vehicleId(rs.getLong(VEHICLEID))
+                    .customer(rs.getString(CUSTOMERID))
+                    .vehicle(rs.getString(VEHICLEID))
                     .bookingDate(rs.getDate(BOOKINGDATE))
                     .amount(rs.getFloat(AMOUNT))
                     .build();
+        }
+        return null;
+    }
+
+    public List<Booking> ResultSetToListOfCommissionAndAmount(ResultSet rs) throws SQLException {
+        List<Booking> commissionAndAmount = new ArrayList<>();
+        if (rs.next()) {
+            Booking booking = Booking.builder()
+                    .commission(rs.getInt("total_commission"))
+                    .totalAmount(rs.getInt("total_amount"))
+                            .build();
+
+             commissionAndAmount.add(booking);
+            return commissionAndAmount;
         }
         return null;
     }

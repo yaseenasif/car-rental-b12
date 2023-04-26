@@ -5,6 +5,7 @@ import org.car_rental.dao.VehicleOwnerDAO;
 
 import org.car_rental.domain.VehicleOwner;
 
+import java.sql.Date;
 import java.util.List;
 
 public class VehicleOwnerService {
@@ -20,6 +21,9 @@ public class VehicleOwnerService {
     return transformToJTable(vehicleOwnerList,5);
     }
 
+    public void setOwnerInactive(Long id){
+        vehicleOwnerDAO.setOwnerInactive(id);
+    }
 
     public void save(String name, String phone, String address, String commission) {
 
@@ -36,6 +40,12 @@ public class VehicleOwnerService {
     public void delete(Long id) {
         vehicleOwnerDAO.deleteById(id);
 
+    }
+
+
+    public String[][] getTotalCommission(Date startDate , Date endDate){
+        List<VehicleOwner> vehicleOwnerList = vehicleOwnerDAO.getTotalOwnerCommission(startDate,endDate);
+        return  transformToJTable(vehicleOwnerList,5);
     }
 
     public void update(String id ,String name , String phone, String address , String commission) {

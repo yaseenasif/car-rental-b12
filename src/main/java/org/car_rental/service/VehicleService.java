@@ -16,6 +16,11 @@ public class VehicleService {
 
     }
 
+    public String[][] getAvailableVehicles(){
+        List<Vehicle> vehicleList = vehicleDAO.getAvailableVehicle();
+       return transformToJTable(vehicleList,6);
+    }
+
     public String[][] searchByName(String name){
         List<Vehicle> vehicleList =vehicleDAO.getByName(name);
         return transformToJTable(vehicleList,6);
@@ -63,5 +68,10 @@ public class VehicleService {
         }
         return  data;
     }
+
+    public void setVehicleInactive(Long id){
+        vehicleDAO.setVehicleInactive(id);
+    }
+
 
 }

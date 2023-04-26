@@ -80,7 +80,7 @@ public class VehicleOwnerUi {
             }else{
                 String selectedId = (String) jt.getValueAt(selectedRowIndex,0);
                 defaultTableModel.removeRow(selectedRowIndex);
-                vehicleOwnerService.delete(Long.valueOf(selectedId));
+                vehicleOwnerService.setOwnerInactive(Long.valueOf(selectedId));
                 DefaultTableModel defaultTableModel1 =new DefaultTableModel(vehicleOwnerService.getAllForJTable(),column);
                 jt.setModel(defaultTableModel1);
                 JOptionPane.showMessageDialog(frame,"Record has been deleted successfully");

@@ -12,9 +12,13 @@ import java.sql.Date;
 public class Booking {
 
     Long id;
-    Long customerId;
-    Long vehicleId;
+    String customer;
+    String vehicle;
     Date bookingDate;
+    Date completeDate;
     Float amount;
+    String status;
+    Integer totalAmount;
+    Integer commission;
 
 }

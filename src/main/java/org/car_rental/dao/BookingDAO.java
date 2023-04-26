@@ -8,7 +8,7 @@ import java.sql.Date;
 import java.util.*;
 
 public class BookingDAO extends BaseDAO implements ICrud<Booking>{
-    BookingMapper bookingMapper=new BookingMapper();
+    BookingMapper bookingMapper = new BookingMapper();
     @Override
     public List<Booking> getAll() {
         try {
@@ -18,6 +18,18 @@ public class BookingDAO extends BaseDAO implements ICrud<Booking>{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void setBookingComplete(Long id , Date date){
+        try {
+            PreparedStatement ps = conn.prepareStatement("update booking set status = 'Complete' , complete_date = ? where id = ? ");
+            ps.setDate(1,date);
+            ps.setInt(2,id.intValue());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
@@ -36,8 +48,8 @@ public class BookingDAO extends BaseDAO implements ICrud<Booking>{
     public void insert(Booking obj) {
         try {
             PreparedStatement ps= conn.prepareStatement(SqlQueryConstant.INSERT_BOOKING);
-            ps.setLong(1,obj.getCustomerId());
-            ps.setLong(2,obj.getVehicleId());
+            ps.setString(1,obj.getCustomer());
+            ps.setString(2,obj.getVehicle());
             ps.setDate(3, obj.getBookingDate());
             ps.setFloat(4,obj.getAmount());
             ps.executeUpdate();
@@ -63,8 +75,11 @@ public class BookingDAO extends BaseDAO implements ICrud<Booking>{
     public void update(Booking obj, Long id) {
         try {
             PreparedStatement ps= conn.prepareStatement(SqlQueryConstant.UPDATE_BOOKING_BY_ID);
-            ps.setFloat(1,obj.getAmount());
-            ps.setInt(2,id.intValue());
+            ps.setString(1,obj.getCustomer());
+            ps.setString(2,obj.getVehicle());
+            ps.setDate(3,obj.getBookingDate());
+            ps.setFloat(4,obj.getAmount());
+            ps.setInt(5,id.intValue());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -73,13 +88,50 @@ public class BookingDAO extends BaseDAO implements ICrud<Booking>{
 
     public List<Booking> getByDate(Date date) {
         try {
-            PreparedStatement ps= conn.prepareStatement("select * from booking where booking_date = '"+date+"'");
+            PreparedStatement ps= conn.prepareStatement(SqlQueryConstant.GET_BY_DATE);
+            ps.setDate(1, date);
             ResultSet rs = ps.executeQuery();
             return bookingMapper.ResultSetToList(rs);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
+
+    }
+
+    public List<Booking>  getByDateRange(Date startDate , Date endDate){
+        try {
+            PreparedStatement ps= conn.prepareStatement(SqlQueryConstant.GET_BY_DATE_RANGE);
+            ps.setDate(1, startDate);
+            ps.setDate(2, endDate);
+            ResultSet rs=ps.executeQuery();
+            return bookingMapper.ResultSetToList(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public List<Booking> getCommissionAndAmount(Date startDate , Date endDate){
+        try {
+            PreparedStatement ps = conn.prepareStatement(SqlQueryConstant.GET_COMMISSION_AND_AMOUNT);
+            ps.setDate(1,startDate);
+            ps.setDate(2,endDate);
+            ResultSet rs = ps.executeQuery();
+            return bookingMapper.ResultSetToListOfCommissionAndAmount(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void setBookingInactive(Long id) {
+        try {
+            PreparedStatement ps = conn.prepareStatement("update booking set status = 'Inactive' where id = ? ");
+            ps.setInt(1,id.intValue());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 }

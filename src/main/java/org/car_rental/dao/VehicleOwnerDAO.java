@@ -3,10 +3,7 @@ package org.car_rental.dao;
 import org.car_rental.domain.VehicleOwner;
 import org.car_rental.mapper.VehicleOwnerMapper;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.List;
 
 public class VehicleOwnerDAO extends BaseDAO implements ICrud<VehicleOwner>{
@@ -49,10 +46,32 @@ public class VehicleOwnerDAO extends BaseDAO implements ICrud<VehicleOwner>{
 
     }
 
+    public List<VehicleOwner> getTotalOwnerCommission(Date startDate , Date endDate){
+        try {
+            PreparedStatement ps = conn.prepareStatement(SqlQueryConstant.GET_TOTAL_COMMISSION);
+            ps.setDate(1, startDate);
+            ps.setDate(2, endDate);
+            ResultSet rs = ps.executeQuery();
+            return vehicleOwnerMapper.ResultSetToList(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public void deleteById(Long id) {
         try {
             PreparedStatement ps= conn.prepareStatement(SqlQueryConstant.DELETE_VEHICLE_OWNER_ID);
+            ps.setInt(1,id.intValue());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void setOwnerInactive(Long id){
+        try {
+            PreparedStatement ps =conn.prepareStatement("update vehicle_owner set status = 'Inactive' where id = ? ");
             ps.setInt(1,id.intValue());
             ps.executeUpdate();
         } catch (SQLException e) {

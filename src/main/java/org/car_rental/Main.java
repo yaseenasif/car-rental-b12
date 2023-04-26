@@ -1,16 +1,10 @@
 package org.car_rental;
 
-import org.car_rental.dao.CustomerDAO;
-import org.car_rental.domain.Customer;
-import org.car_rental.service.CustomerService;
-import org.car_rental.ui.LoginUI;
-
-import java.util.List;
+import org.car_rental.ui.HomeUi;
 
 public class Main {
     public static void main(String[] args) {
-
-        new LoginUI();
+     new HomeUi();
 
     }
 }

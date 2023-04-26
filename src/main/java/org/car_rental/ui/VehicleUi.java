@@ -79,7 +79,7 @@ public class VehicleUi {
            }else {
                String selectedId = (String) jt.getValueAt(selectedRowIndex,0);
                defaultTableModel.removeRow(selectedRowIndex);
-               vehicleService.delete(Long.valueOf(selectedId));
+               vehicleService.setVehicleInactive(Long.valueOf(selectedId));
                DefaultTableModel defaultTableModel1=new DefaultTableModel(vehicleService.getAllForJTable(),column);
                jt.setModel(defaultTableModel1);
                JOptionPane.showMessageDialog(frame,"Record has been updated successfully");

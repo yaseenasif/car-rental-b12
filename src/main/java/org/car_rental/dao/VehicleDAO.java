@@ -24,6 +24,17 @@ public class VehicleDAO extends BaseDAO implements ICrud<Vehicle>{
 
     }
 
+    public List<Vehicle> getAvailableVehicle(){
+        try {
+            PreparedStatement ps = conn.prepareStatement(SqlQueryConstant.GET_AVAILABLE_VEHICLE);
+            ResultSet rs = ps.executeQuery();
+            return vehicleMapper.ResultSetToList(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
     @Override
     public Vehicle getById(Long id) {
 
@@ -91,10 +102,24 @@ public class VehicleDAO extends BaseDAO implements ICrud<Vehicle>{
             throw new RuntimeException(e);
         }
     }
-    public void getDataForComboBox(Vehicle vehicle){
+
+    public void setVehicleInactive(Long id){
         try {
-            PreparedStatement ps= conn.prepareStatement("select id, vehicle_name from vehicle");
-//            ps.setLong(1, );
+            PreparedStatement ps = conn.prepareStatement("update vehicle set status = 'Inactive' where id = ?" );
+            ps.setInt(1,id.intValue());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
+    public List<Vehicle> getDataForComboBox(){
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery("select * from vehicle where status = 'Active' ");
+            return vehicleMapper.ResultSetToList(resultSet);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

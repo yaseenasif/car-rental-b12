@@ -21,12 +21,14 @@ public class HomeUi {
             JButton vehicleOwnerBtn=new JButton("Owner");
             JButton bookingBtn=new JButton("Booking");
             JButton userBtn=new JButton("User");
+            JButton reportBtn = new JButton("Report");
             JButton logoutBtn=new JButton("Logout");
             buttonPanel.add(customerBtn);
             buttonPanel.add(vehicleBtn);
             buttonPanel.add(bookingBtn);
             buttonPanel.add(vehicleOwnerBtn);
             buttonPanel.add(userBtn);
+            buttonPanel.add(reportBtn);
             buttonPanel.add(logoutBtn);
 
             addImageOnButton(customerBtn,"src/main/resources/return-customer-icon.png",50,50);
@@ -37,6 +39,11 @@ public class HomeUi {
             addImageOnButton(logoutBtn,"src/main/resources/shutdown-icon.png",50,50);
 
             frame.add(buttonPanel);
+
+            reportBtn.addActionListener(e->{
+                new ReportUi();
+                frame.dispose();
+            });
 
 
             customerBtn.addActionListener((event)->{

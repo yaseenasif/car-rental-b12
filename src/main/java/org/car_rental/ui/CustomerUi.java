@@ -133,7 +133,7 @@ public class CustomerUi extends Component {
             }else{
                 String selectedId = (String) jt.getValueAt(selectedRowIndex,0);
                 defaultTableModel.removeRow(selectedRowIndex);
-                customerService.deleteCustomerById(Long.valueOf(selectedId));
+                customerService.setCustomerInactive(Long.valueOf(selectedId));
                 DefaultTableModel defaultTableModel1 = new DefaultTableModel(customerService.getAllCustomerForJTable(),column);
                 jt.setModel(defaultTableModel1);
                 JOptionPane.showMessageDialog(frame,"Row successfully deleted");

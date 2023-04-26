@@ -16,5 +16,4 @@ public class Customer {
     String address;
     String referencePhoneNumber;
 
-
 }
